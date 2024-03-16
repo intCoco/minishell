@@ -6,7 +6,7 @@
 #    By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/07 11:45:32 by bsoubaig          #+#    #+#              #
-#    Updated: 2024/03/15 19:06:25 by chuchard         ###   ########.fr        #
+#    Updated: 2024/03/16 13:28:51 by chuchard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,7 +99,9 @@ ifeq ($(UNAME_S),Darwin)
 endif
 
 ${OBJ_DIR}%.o:	${SRC_DIR}%.c
-	@printf "${SEP}${CLEAR}${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}${NAME}${RESET}]: ${GREEN}Compiling ${RESET}%s...\n${SEP}" ${notdir $<}
+	@printf "${SEP}${CLEAR}${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}libft${RESET}]: ${GREEN}Compiling ${RESET}%s..." ${notdir $<}
+	@tput cr
+	@printf "									 ${BOLD}[${RED}✘${RESET}]\n${SEP}"
 	@${CC} ${CFLAGS} -I${SRC_DIR} -c $< -o $@
 	@tput cuu 3
 
@@ -107,7 +109,8 @@ all:			${NAME}
 
 ${NAME}: 		${OBJS}
 	@ar rcs ${NAME} ${OBJS}
-	@printf "${SEP}${CLEAR}${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}${NAME}${RESET}]: Library compiled ${GREEN}successfully${RESET}.\n${RESET}${SEP}"
+	@printf "${SEP}${CLEAR}${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}libft${RESET}]: Library ${GREEN}compiled${RESET} successfully.			 	 ${BOLD}[${GREEN}✔${RESET}]\n${RESET}${SEP}"
+	@tput cuu 1
 
 ${OBJS}:		| ${OBJ_DIR}
 
@@ -119,22 +122,34 @@ ${OBJ_DIR}:
 	@mkdir ${OBJ_DIR}/random
 
 clean:
+ifeq ($(wildcard objs), objs)
 	@for file in $(wildcard ${OBJ_DIR}/*/*.o); do \
-        printf "${SEP}${CLEAR}${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}${NAME}${RESET}]: ${RED}Clearing${RESET} %s...\n${SEP}" $$(basename $$file); \
+        printf "${SEP}${CLEAR}${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}libft${RESET}]: ${RED}Cleaning${RESET} %s..." $$(basename $$file); \
+		tput cr; \
+		printf "									 ${BOLD}[${RED}✘${RESET}]\n${SEP}"; \
 		sleep 0.01; \
 		tput cuu 3; \
         ${RM} $${file}; \
     done
 	@${RM} ${OBJ_DIR}
-	@printf "${SEP}${CLEAR}${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}${NAME}${RESET}]: Objects cleaned ${GREEN}successfully${RESET}.\n${RESET}${SEP}"
+	@printf "${SEP}${CLEAR}${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}libft${RESET}]: Objects ${GREEN}cleaned${RESET} successfully.			 	 ${BOLD}[${GREEN}✔${RESET}]\n${SEP}"
+else
+	@printf "${SEP}${CLEAR}${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}libft${RESET}]: Objects ${GREEN}have already been cleaned${RESET}.			 	 ${BOLD}[${GREEN}✔${RESET}]\n${SEP}"
+endif
 
-fclean:			clean
-	@tput cuu 1
-	@printf "${CLEAR}${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}${NAME}${RESET}]: ${RED}Clearing${RESET} library...\n${SEP}"
+fclean: clean
+	@tput cuu 2
+ifeq ($(wildcard libft.a), libft.a)
+	@printf "${CLEAR}${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}libft${RESET}]: ${RED}Cleaning${RESET} library..."
+	@tput cr
+	@printf "									 ${BOLD}[${RED}✘${RESET}]\n${SEP}"
 	@${RM} ${NAME}
 	@sleep 0.2
 	@tput cuu 2
-	@printf "${CLEAR}${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}${NAME}${RESET}]: Library cleaned ${GREEN}successfully${RESET}.\n${RESET}${SEP}"
+	@printf "${CLEAR}${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}libft${RESET}]: Library ${GREEN}cleaned${RESET} successfully.			 	 ${BOLD}[${GREEN}✔${RESET}]\n${SEP}"
+else
+	@printf "${CLEAR}${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}libft${RESET}]: Library ${GREEN}have already been cleaned${RESET}.			 	 ${BOLD}[${GREEN}✔${RESET}]\n${SEP}"
+endif
 
 re: 			fclean all
 
