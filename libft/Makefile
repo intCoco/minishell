@@ -6,7 +6,7 @@
 #    By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/16 15:10:19 by chuchard          #+#    #+#              #
-#    Updated: 2024/03/16 15:10:23 by chuchard         ###   ########.fr        #
+#    Updated: 2024/03/16 16:32:54 by chuchard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SEP				= ${TRANS}─────────────────────
 # Executable and compilation
 NAME		  	= libft.a
 
-SRC_DIR			= ./srcs/
+SRC_DIR			= ./sources/
 SRCS			= libft/ft_atoi.c \
 			    libft/ft_bzero.c \
 			    libft/ft_calloc.c \

@@ -6,7 +6,7 @@
 #    By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 17:29:03 by chuchard          #+#    #+#              #
-#    Updated: 2024/03/16 13:38:07 by chuchard         ###   ########.fr        #
+#    Updated: 2024/03/16 16:33:01 by chuchard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ SEP2			= ${TRANS}═════════════════════
 NAME			= minishell
 LIBFT 			= libft.a
 
-SRC_DIR			= ./srcs/
+SRC_DIR			= ./sources/
 SRCS			= main.c
 
 OBJ_DIR			= ./objs/
