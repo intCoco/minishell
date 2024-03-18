@@ -6,11 +6,22 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 19:28:45 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/15 18:47:21 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:35:28 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
+
+static int	ft_is_charset(char c, char *charset)
+{
+	int	i;
+
+	i = -1;
+	while (charset[++i])
+		if (c == charset[i])
+			return (1);
+	return (0);
+}
 
 static char	*ft_strndup(char *src, int min, int max)
 {
@@ -31,7 +42,7 @@ static char	*ft_strndup(char *src, int min, int max)
 	return (dest);
 }
 
-static int	ft_splitcount(const char *str, char c)
+static int	ft_splitcount(const char *s, char *charset)
 {
 	int	i;
 	int	len;
@@ -39,12 +50,12 @@ static int	ft_splitcount(const char *str, char c)
 
 	i = 0;
 	len = 0;
-	while (str[i])
+	while (s[i])
 	{
-		while (str[i] && str[i] == c)
+		while (s[i] && ft_is_charset(s[i], charset))
 			i++;
 		start = i;
-		while (str[i] && str[i] != c)
+		while (s[i] && !ft_is_charset(s[i], charset))
 			i++;
 		if (i != start)
 			len++;
@@ -52,7 +63,7 @@ static int	ft_splitcount(const char *str, char c)
 	return (len);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char *charset)
 {
 	size_t	i;
 	size_t	j;
@@ -63,31 +74,19 @@ char	**ft_split(char const *s, char c)
 	j = -1;
 	if (!s)
 		return (NULL);
-	res = (char **)malloc(sizeof(char *) * (ft_splitcount(s, c) + 1));
+	res = (char **)malloc(sizeof(char *) * (ft_splitcount(s, charset) + 1));
 	if (!res)
 		return (NULL);
 	while (s[i])
 	{
-		while (s[i] == c)
+		while (ft_is_charset(s[i], charset))
 			i++;
 		start = i;
-		while (s[i] != c && s[i])
+		while (!ft_is_charset(s[i], charset) && s[i])
 			i++;
-		if (i != start && (s[i] == c || s[i] == '\0'))
+		if (i != start && (ft_is_charset(s[i], charset) || s[i] == '\0'))
 			res[++j] = ft_strndup((char *)s, start, i);
 	}
-	res[ft_splitcount(s, c)] = 0;
+	res[ft_splitcount(s, charset)] = 0;
 	return (res);
 }
-
-/*int main()
-{
-	int i = 0;
-	char **s = ft_split("                  olol", ' ');
-	while (s[i] != NULL)
-	{
-		printf("%s\n", s[i]);
-		i++;
-	}
-	printf("%s\n", s[i]);
-}*/
