@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 22:26:45 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/15 22:28:37 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:23:27 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@
 # include <unistd.h>
 
 # define PROMPT "\033[1;34mminishell\033[0m> "
+# define WHITESPACES " \t\v\n\r"
 
 typedef struct
 {
-	int type;    // Type de token
-	char *value; // Valeur du token (le texte réel du token)
+	char *command;
+	char *input;
 }	t_token;
 
 #endif
