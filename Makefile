@@ -6,7 +6,7 @@
 #    By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 17:29:03 by chuchard          #+#    #+#              #
-#    Updated: 2024/03/16 16:33:01 by chuchard         ###   ########.fr        #
+#    Updated: 2024/03/20 19:00:15 by chuchard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,6 +73,7 @@ ${SEP2}"
 $(NAME): 		$(OBJS)
 	@printf "${SEP2}${CLEAR}${RESET}${GREEN}»${RESET} [${ORANGE}${BOLD}Makefile${RESET}]: ${BOLD}Compilation${RESET}...					 	 ${BOLD}[${RED}✘${RESET}]\n"
 	@make -s -C libft
+	@tput cuu 1
 	@$(CC) $(CFLAGS) $(OBJS) $(INCLUDE) libft/$(LIBFT) -o $(NAME) -lreadline
 	@printf "${SEP}${CLEAR}${RESET}${GREEN}»${RESET} [${BLUE}${BOLD}${NAME}${RESET}]: Project ${GREEN}compiled${RESET} successfully.			 	 ${BOLD}[${GREEN}✔${RESET}]\n${SEP2}"
 	@sleep 0.2

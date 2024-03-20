@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:48:56 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/18 15:27:07 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:05:14 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@ int		ft_isdigit(int c);
 int		ft_isprint(int c);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
+int		ft_ischarset(char c, char *charset);
 
 int		ft_atoi(const char *str);
 char	*ft_itoa(int c);
 
 void	ft_bzero(void *s, size_t len);
 void	*ft_calloc(size_t c, size_t l);
+void	*ft_realloc(void *ptr, size_t newsize);
 void	*ft_memchr(const void *m, int c, size_t l);
 int		ft_memcmp(const void *p1, const void *p2, size_t l);
 void	*ft_memcpy(void *dest, const void *src, size_t len);
@@ -56,6 +58,7 @@ void	ft_putstr_fd(char *s, int fd);
 char	**ft_split(char const *s, char *charset);
 char	*ft_strchr(const char *str, int c);
 char	*ft_strdup(const char *src);
+char	*ft_strndup(char *src, int min, int max);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcat(char *dest, const char *src, size_t size);

@@ -6,7 +6,7 @@
 #    By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/16 15:10:19 by chuchard          #+#    #+#              #
-#    Updated: 2024/03/16 16:32:54 by chuchard         ###   ########.fr        #
+#    Updated: 2024/03/20 18:50:05 by chuchard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRCS			= libft/ft_atoi.c \
 			    libft/ft_isascii.c \
 			    libft/ft_isdigit.c \
 			    libft/ft_isprint.c \
+			    libft/ft_ischarset.c \
 			    libft/ft_itoa.c \
 			    libft/ft_memchr.c \
 			    libft/ft_memcmp.c \
@@ -45,9 +46,11 @@ SRCS			= libft/ft_atoi.c \
 			    libft/ft_putendl_fd.c \
 			    libft/ft_putnbr_fd.c \
 			    libft/ft_putstr_fd.c \
+			    libft/ft_realloc.c \
 			    libft/ft_split.c \
 			    libft/ft_strchr.c \
 			    libft/ft_strdup.c \
+			    libft/ft_strndup.c \
 			    libft/ft_striteri.c \
 			    libft/ft_strjoin.c \
 			    libft/ft_strlcat.c \
@@ -99,18 +102,23 @@ ifeq ($(UNAME_S),Darwin)
 endif
 
 ${OBJ_DIR}%.o:	${SRC_DIR}%.c
+	@tput cuu 3
 	@printf "${SEP}${CLEAR}${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}libft${RESET}]: ${GREEN}Compiling ${RESET}%s..." ${notdir $<}
 	@tput cr
 	@printf "									 ${BOLD}[${RED}✘${RESET}]\n${SEP}"
 	@${CC} ${CFLAGS} -I${SRC_DIR} -c $< -o $@
-	@tput cuu 3
 
-all:			${NAME}
+
+all:
+	@printf "${SEP}${CLEAR}${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}libft${RESET}]: ${GREEN}No modification has been done${RESET} since last make.		 ${BOLD}[${GREEN}✔${RESET}]\n${RESET}${SEP}"
+	@make -s all2
+
+all2:	${NAME}
 
 ${NAME}: 		${OBJS}
 	@ar rcs ${NAME} ${OBJS}
+	@tput cuu 3
 	@printf "${SEP}${CLEAR}${RESET}${GREEN}»${RESET} [${PURPLE}${BOLD}libft${RESET}]: Library ${GREEN}compiled${RESET} successfully.			 	 ${BOLD}[${GREEN}✔${RESET}]\n${RESET}${SEP}"
-	@tput cuu 1
 
 ${OBJS}:		| ${OBJ_DIR}
 

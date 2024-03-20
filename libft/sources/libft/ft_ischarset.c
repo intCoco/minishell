@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   ft_is_charset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/10 17:02:31 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/20 17:19:02 by chuchard         ###   ########.fr       */
+/*   Created: 2024/03/20 17:04:04 by chuchard          #+#    #+#             */
+/*   Updated: 2024/03/20 17:05:20 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/libft.h"
-
-char	*ft_strtrim(char const *s1, char const *set)
+int	ft_ischarset(char c, char *charset)
 {
-	char	*s2;
-	size_t	i;
-	size_t	j;
+	int	i;
 
-	i = 0;
-	if (!s1 || !set)
-		return (NULL);
-	j = ft_strlen(s1);
-	while (ft_ischarset(s1[i], (char *)set) == 1 && s1[i])
-		i++;
-	while ((ft_ischarset(s1[j], (char *)set) == 1 && j > i) || s1[j] == '\0')
-		j--;
-	s2 = ft_substr(s1, i, j - i + 1);
-	return (s2);
+	i = -1;
+	while (charset[++i])
+		if (c == charset[i])
+			return (1);
+	return (0);
 }

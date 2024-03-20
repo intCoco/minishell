@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/10 17:02:31 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/20 17:19:02 by chuchard         ###   ########.fr       */
+/*   Created: 2024/03/20 16:41:43 by chuchard          #+#    #+#             */
+/*   Updated: 2024/03/20 18:28:57 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
 
-char	*ft_strtrim(char const *s1, char const *set)
+void	*ft_realloc(void *ptr, size_t newsize)
 {
-	char	*s2;
-	size_t	i;
-	size_t	j;
+	char	*newptr;
+	size_t	cursize;
 
-	i = 0;
-	if (!s1 || !set)
-		return (NULL);
-	j = ft_strlen(s1);
-	while (ft_ischarset(s1[i], (char *)set) == 1 && s1[i])
-		i++;
-	while ((ft_ischarset(s1[j], (char *)set) == 1 && j > i) || s1[j] == '\0')
-		j--;
-	s2 = ft_substr(s1, i, j - i + 1);
-	return (s2);
+	if (ptr == 0)
+		return (malloc(newsize));
+	cursize = sizeof(ptr);
+	if (newsize <= cursize)
+		return (ptr);
+	newptr = malloc(newsize);
+	ft_memcpy(ptr, newptr, cursize);
+	free(ptr);
+	return (newptr);
 }
