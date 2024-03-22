@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:55:48 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/22 18:55:19 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:02:39 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ void	ft_tokenization(t_input *input)
 {
 	printf("i = %i\n", input->i);
 	printf("j = %i\n", input->j);
-	if (input->total[input->i] == '\"')
+	if (input->total[input->i] == '\'')
 	{
-		printf("\" detected\n");
+		printf("\' detected\n");
 		input->i++;
 		input->left++;
-		while (input->total[input->i] && input->total[input->i] != '\"')
+		while (input->total[input->i] && input->total[input->i] != '\'')
 			input->i++;
 		if (!input->total[input->i])
 		{
