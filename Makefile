@@ -6,7 +6,7 @@
 #    By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 17:29:03 by chuchard          #+#    #+#              #
-#    Updated: 2024/03/20 19:00:15 by chuchard         ###   ########.fr        #
+#    Updated: 2024/03/22 15:29:32 by chuchard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,7 +87,7 @@ ${OBJ_DIR}:
 	@mkdir ${OBJ_DIR}
 
 debug:
-	@make DEBUG=1 re
+	@make -s DEBUG=1 re
 	@printf "${RESET}${RED}${BOLD}Compilation done with memory leaks detection${RESET}\n"
 
 clean:
