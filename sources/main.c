@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:55:48 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/22 18:24:48 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/03/22 18:55:19 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,74 +47,91 @@ char	*ft_strtrim_ws(char *s)
 	return (s);
 }
 
-void	print_info(t_minishell *ms, int k)
+void	print_info(t_input *input, int k)
 {
-	printf("left avant = %s\n", ms->left);
-	printf("token command = %s\n", ms->tokens[k].command);
-	// printf("token input = %s\n", ms->tokens[k].input);
-	// printf("token redir = %i\n", ms->tokens[k].redir);
-	// printf("token redir = %s\n", ms->tokens[k].redir_target);
+	printf("left avant = %s\n", input->left);
+	printf("token command = %s\n", input->tokens[k].command);
+	// printf("token input = %s\n", input->tokens[k].input);
+	// printf("token redir = %i\n", input->tokens[k].redir);
+	// printf("token redir = %s\n", input->tokens[k].redir_target);
 }
 
-void	ft_tokenization(t_minishell *ms)
+void	ft_tokenization(t_input *input)
 {
-	printf("i = %i\n", ms->i);
-	printf("j = %i\n", ms->j);
-	if (ms->input[ms->i] == '\"')
+	printf("i = %i\n", input->i);
+	printf("j = %i\n", input->j);
+	if (input->total[input->i] == '\"')
 	{
 		printf("\" detected\n");
-		while (ms->input[ms->i] && ms->input[ms->i] != '\"')
-			ms->i++;
+		input->i++;
+		input->left++;
+		while (input->total[input->i] && input->total[input->i] != '\"')
+			input->i++;
+		if (!input->total[input->i])
+		{
+			ft_putendl_fd("Unclosed quotes.", 2);
+			return ;
+		}
 	}
 	else
-		while (ms->input[ms->i] && !ft_ischarset(ms->input[ms->i - 1], WHITESPACES)
-			&& !ft_ischarset(ms->input[ms->i], METACHARS))
-			ms->i++;
-	if (ms->j == 0)
-		ms->tokens[ms->j].command = ft_strndup(ms->input, ms->left - ms->input,
-				ms->i);
+		while (input->total[input->i] && !ft_ischarset(input->total[input->i
+				- 1], WHITESPACES) && !ft_ischarset(input->total[input->i],
+				METACHARS))
+			input->i++;
+	printf("i=%i\n", input->i);
+	if (input->j == 0)
+		input->tokens[input->j].command = ft_strndup(input->total, input->left
+				- input->total, input->i);
 	// if (j == 1)
-	// 	ms->tokens[j].input = ft_strndup(ms->input, i, ms->left - ms->input);
+	// 	input->tokens[j].input = ft_strndup(input->total, i, input->left - input->total);
 	// if (j == 2)
-	// 	ms->tokens[j].redir_target = ft_strndup(ms->input, i, ms->left - ms->input);
+	// 	input->tokens[j].redir_target = ft_strndup(input->total, i, input->left - input->total);
 	// if (j == 3)
-	// 	ms->tokens[j].input = ft_strndup(ms->input, i, ms->left - ms->input);
-	print_info(ms, 0);
-	ms->left += ms->i;
-	printf("left apres = %s\n", ms->left);
-	ms->j++;
+	// 	input->tokens[j].input = ft_strndup(input->total, i, input->left - input->total);
+	print_info(input, 0);
+	input->left += input->i;
+	printf("left apres = %s\n", input->left);
+	input->j++;
 }
 
-void	ft_free(t_minishell *ms)
+void	ft_free_input_data(t_input *input)
 {
-	while (ms->token_nb >= 0)
+	while (input->token_nb >= 0)
 	{
-		if (ms->tokens[ms->token_nb].command)
-			free(ms->tokens[ms->token_nb].command);
-		if (ms->tokens[ms->token_nb].input)
-			free(ms->tokens[ms->token_nb].input);
-		if (ms->tokens[ms->token_nb].redir_target)
-			free(ms->tokens[ms->token_nb].redir_target);
-		ms->token_nb--;
+		if (input->tokens[input->token_nb].command)
+			free(input->tokens[input->token_nb].command);
+		if (input->tokens[input->token_nb].input)
+			free(input->tokens[input->token_nb].input);
+		if (input->tokens[input->token_nb].redir_target)
+			free(input->tokens[input->token_nb].redir_target);
+		input->token_nb--;
 	}
-	free(ms->tokens);
-	free(ms->input);
-	ft_bzero(ms->tokens, sizeof(t_token));
+	free(input->tokens);
+	free(input->total);
+	ft_bzero(input->tokens, sizeof(t_token));
 }
 
-int	treat(t_minishell *ms)
+int	ft_treat_input(t_input *input)
 {
-	ms->i = 0;
-	ms->j = 0;
-	ms->tokens = ft_calloc(sizeof(t_token), 1);
-	if (!ms->tokens)
+	ft_bzero(input, sizeof(t_input));
+	input->total = readline(PROMPT);
+	if (input->total == NULL)
 		return (0);
-	ft_strtrim_ws(ms->input);
-	ms->left = ms->input;
-	// while (ms->left)
-	ft_tokenization(ms);
-	printf("Commande exécutée : %s\n", ms->input);
-	return 1;
+	if (ft_strcmp(input->total, "") != 0)
+		add_history(input->total);
+	if (!ft_strcmp(input->total, "exit") || !ft_strcmp(input->total, "quit"))
+		return (0);
+	input->i = 0;
+	input->j = 0;
+	input->tokens = ft_calloc(sizeof(t_token), 1);
+	if (!input->tokens)
+		return (0);
+	ft_strtrim_ws(input->total);
+	input->left = input->total;
+	// while (input->left)
+	ft_tokenization(input);
+	printf("Commande exécutée : %s\n", input->total);
+	return (1);
 }
 
 int	main(void)
@@ -122,21 +139,13 @@ int	main(void)
 	t_minishell ms;
 
 	ft_bzero(&ms, sizeof(t_minishell));
-	ft_bzero(&ms, sizeof(t_minishell));
 	signal(SIGINT, handle_sig);
 	signal(SIGQUIT, handle_sig);
 	while (1)
 	{
-		ms.input = readline(PROMPT);
-		if (ms.input == NULL)
+		if (!ft_treat_input(&ms.input))
 			break ;
-		if (ft_strcmp(ms.input, "") != 0)
-			add_history(ms.input);
-		if (!ft_strcmp(ms.input, "exit") || !ft_strcmp(ms.input, "quit"))
-			break ;
-		if(!treat(&ms))
-			break ;
-		ft_free(&ms);
+		ft_free_input_data(&ms.input);
 	}
 	rl_clear_history();
 	printf("Fin de l'entrée standard.\n");

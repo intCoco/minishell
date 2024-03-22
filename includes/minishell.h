@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 22:26:45 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/22 18:24:16 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/03/22 18:28:47 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,25 @@
 
 typedef struct
 {
-	char	*command;
-	char	*input;
-	int		redir;
-	char	*redir_target;
-}			t_token;
+char *command;
+char *input;
+int redir;
+char *redir_target;
+} t_token;
 
 typedef struct
 {
-	char	*input;
-	char	*left;
-	t_token	*tokens;
-	int		token_nb;
-	int		i;
-	int		j;
-}			t_minishell;
+char *total;
+char *left;
+t_token *tokens;
+int token_nb;
+int i;
+int j;
+} t_input;
+
+typedef struct
+{
+t_input input;
+} t_minishell;
 
 #endif
