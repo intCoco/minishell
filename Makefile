@@ -6,7 +6,7 @@
 #    By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 17:29:03 by chuchard          #+#    #+#              #
-#    Updated: 2024/03/22 15:29:32 by chuchard         ###   ########.fr        #
+#    Updated: 2024/05/20 08:03:59 by chuchard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,12 +67,12 @@ ${OBJ_DIR}%.o:	${SRC_DIR}%.c
 all:			$(NAME)
 	@printf "${SEP2}\
 ${GREEN}»${RESET} [${ORANGE}${BOLD}Makefile${RESET}]: ${GREEN}Welcome to our Minishell project!${RESET}\n\n\
-${ITALIC}${TRANS}Authors: npaolin & chuchard${RESET}\n\
+${ITALIC}${TRANS}Authors: chuchard & chuchard${RESET}\n\
 ${SEP2}"
 
 $(NAME): 		$(OBJS)
 	@printf "${SEP2}${CLEAR}${RESET}${GREEN}»${RESET} [${ORANGE}${BOLD}Makefile${RESET}]: ${BOLD}Compilation${RESET}...					 	 ${BOLD}[${RED}✘${RESET}]\n"
-	@make -s -C libft
+	@make -sC libft
 	@tput cuu 1
 	@$(CC) $(CFLAGS) $(OBJS) $(INCLUDE) libft/$(LIBFT) -o $(NAME) -lreadline
 	@printf "${SEP}${CLEAR}${RESET}${GREEN}»${RESET} [${BLUE}${BOLD}${NAME}${RESET}]: Project ${GREEN}compiled${RESET} successfully.			 	 ${BOLD}[${GREEN}✔${RESET}]\n${SEP2}"
