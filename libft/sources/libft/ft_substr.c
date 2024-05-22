@@ -6,35 +6,24 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:50:05 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/15 18:49:43 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/03/22 23:03:17 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
 
-char	*ft_substr(char const *str, unsigned int start, size_t l)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char			*res;
-	size_t			i;
-	unsigned int	slen;
+	char	*new_str;
+	size_t	i;
+	size_t	j;
 
-	i = -1;
-	if (!str)
-		return (NULL);
-	slen = ft_strlen(str);
-	if (l > slen)
-		l = slen;
-	res = malloc(l + 1);
-	if (!res)
-		return (NULL);
-	ft_memset(res, '\0', l + 1);
-	if (start >= slen)
-		return (ft_memset(res, '\0', l));
-	if (start < slen)
-	{
-		while (++i < l && str[start + i])
-			res[i] = ((char *)str)[start + i];
-	}
-	res[i] = '\0';
-	return (res);
+	if (!s || !(new_str = (char *)malloc(len + 1)))
+		return (0);
+	i = start;
+	j = 0;
+	while (i < ft_strlen(s) && j < len)
+		new_str[j++] = s[i++];
+	new_str[j] = '\0';
+	return (new_str);
 }
