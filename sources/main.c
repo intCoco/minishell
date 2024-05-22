@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:55:48 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/22 19:02:39 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/05/22 08:26:37 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,34 +60,36 @@ void	ft_tokenization(t_input *input)
 {
 	printf("i = %i\n", input->i);
 	printf("j = %i\n", input->j);
-	if (input->total[input->i] == '\'')
+	while (input->left[input->i] && !ft_ischarset(input->left[input->i],
+			WHITESPACES) && (!ft_ischarset(input->left[input->i], METACHARS)
+			|| (input->i > 0 && input->left[input->i - 1] == '\\')))
 	{
-		printf("\' detected\n");
-		input->i++;
-		input->left++;
-		while (input->total[input->i] && input->total[input->i] != '\'')
-			input->i++;
-		if (!input->total[input->i])
+		if (input->left[input->i] == '\'' || input->left[input->i] == '\"')
 		{
-			ft_putendl_fd("Unclosed quotes.", 2);
-			return ;
-		}
-	}
-	else
-		while (input->total[input->i] && !ft_ischarset(input->total[input->i
-				- 1], WHITESPACES) && !ft_ischarset(input->total[input->i],
-				METACHARS))
+			printf("' detected\n");
 			input->i++;
-	printf("i=%i\n", input->i);
-	if (input->j == 0)
-		input->tokens[input->j].command = ft_strndup(input->total, input->left
-				- input->total, input->i);
+			while (input->left[input->i] && input->left[input->i] != *input->left)
+				input->i++;
+			if (!input->left[input->i])
+			{
+				ft_putendl_fd("Unclosed quotes.", 2);
+				return ;
+			}
+		}
+		input->i++;
+	}
+	input->tokens[input->j].command = ft_strndup(input->left, 0, input->i - (input->left - input->total));
 	// if (j == 1)
-	// 	input->tokens[j].input = ft_strndup(input->total, i, input->left - input->total);
+	// 	input->tokens[j].input = ft_strndup(input->left, i, input->left
+				// - input->left);
 	// if (j == 2)
-	// 	input->tokens[j].redir_target = ft_strndup(input->total, i, input->left - input->total);
+	// 	input->tokens[j].redir_target = ft_strndup(input->left, i, input->left
+				// - input->left);
 	// if (j == 3)
-	// 	input->tokens[j].input = ft_strndup(input->total, i, input->left - input->total);
+	// 	input->tokens[j].input = ft_strndup(input->left, i, input->left
+				// - input->left);
+	if (input->left[input->i] == ' ')
+		input->i++;
 	print_info(input, 0);
 	input->left += input->i;
 	printf("left apres = %s\n", input->left);
@@ -119,6 +121,7 @@ int	ft_treat_input(t_input *input)
 		return (0);
 	if (ft_strcmp(input->total, "") != 0)
 		add_history(input->total);
+	ft_strtrim_ws(input->total);
 	if (!ft_strcmp(input->total, "exit") || !ft_strcmp(input->total, "quit"))
 		return (0);
 	input->i = 0;
@@ -126,7 +129,6 @@ int	ft_treat_input(t_input *input)
 	input->tokens = ft_calloc(sizeof(t_token), 1);
 	if (!input->tokens)
 		return (0);
-	ft_strtrim_ws(input->total);
 	input->left = input->total;
 	// while (input->left)
 	ft_tokenization(input);
