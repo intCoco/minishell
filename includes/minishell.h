@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 22:26:45 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/22 18:28:47 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/03/23 00:02:05 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,29 +24,28 @@
 
 # define PROMPT "\033[1;34mminishell\033[0m> "
 # define WHITESPACES " \t\v\n\r"
-# define METACHARS "><;\"\'"
+# define METACHARS "><;"
 
 typedef struct
 {
-char *command;
-char *input;
-int redir;
-char *redir_target;
-} t_token;
+	char	*command;
+	char	*input;
+	char	*redir_target;
+}			t_token;
 
 typedef struct
 {
-char *total;
-char *left;
-t_token *tokens;
-int token_nb;
-int i;
-int j;
-} t_input;
+	char	*total;
+	char	*left;
+	t_token	*tokens;
+	int		token_nb;
+	int		i;
+	int		j;
+}			t_input;
 
 typedef struct
 {
-t_input input;
-} t_minishell;
+	t_input	input;
+}			t_minishell;
 
 #endif
