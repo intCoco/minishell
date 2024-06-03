@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 22:26:45 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/23 00:02:05 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:03:31 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,28 @@
 # define WHITESPACES " \t\v\n\r"
 # define METACHARS "><;"
 
-typedef struct
+typedef enum e_token_type
 {
-	char	*command;
-	char	*input;
-	char	*redir_target;
+    COMMAND,
+    PIPE,
+    REDIRECTION,
+} t_token_type;
+
+typedef struct s_token
+{
+	char			*value;
+	t_token_type	type;
+	struct s_token	*next;
 }			t_token;
 
 typedef struct
 {
 	char	*total;
 	char	*left;
-	t_token	*tokens;
 	int		token_nb;
 	int		i;
 	int		j;
+	t_token	*tokens;
 }			t_input;
 
 typedef struct
