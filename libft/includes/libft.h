@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:48:56 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/20 21:36:13 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/06/03 17:44:51 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_putstr_fd(char *s, int fd);
 char	**ft_split(char const *s, char *charset);
 char	*ft_strchr(const char *str, int c);
 char	*ft_strdup(const char *src);
-char	*ft_strndup(char *src, int min, int max);
+char	*ft_strndup(const char *s, size_t start, size_t n);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcat(char *dest, const char *src, size_t size);
