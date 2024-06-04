@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:50:05 by chuchard          #+#    #+#             */
-/*   Updated: 2024/03/22 23:03:17 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/06/04 21:56:18 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	i;
 	size_t	j;
 
-	if (!s || !(new_str = (char *)malloc(len + 1)))
+	new_str = (char *)malloc(len + 1);
+	if (!s || !new_str)
 		return (0);
 	i = start;
 	j = 0;
