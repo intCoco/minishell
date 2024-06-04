@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 22:26:45 by chuchard          #+#    #+#             */
-/*   Updated: 2024/06/03 18:03:31 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/06/04 21:54:57 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,22 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <stdbool.h>
 
 # define PROMPT "\033[1;34mminishell\033[0m> "
 # define WHITESPACES " \t\v\n\r"
-# define METACHARS "><;"
+# define METACHARS "><;|"
 
 typedef enum e_token_type
 {
-    COMMAND,
-    PIPE,
-    REDIRECTION,
-} t_token_type;
+	TEXT,
+	COMMAND,
+	PIPE,
+	INPUT,
+	HEREDOC,
+	OUTPUT,
+	APPEND,
+}	t_token_type;
 
 typedef struct s_token
 {
@@ -40,7 +45,7 @@ typedef struct s_token
 	struct s_token	*next;
 }			t_token;
 
-typedef struct
+typedef struct s_input
 {
 	char	*total;
 	char	*left;
@@ -50,7 +55,7 @@ typedef struct
 	t_token	*tokens;
 }			t_input;
 
-typedef struct
+typedef struct s_minishell
 {
 	t_input	input;
 }			t_minishell;
