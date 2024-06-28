@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 22:26:45 by chuchard          #+#    #+#             */
-/*   Updated: 2024/06/04 21:54:57 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/06/05 00:06:02 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 # define PROMPT "\033[1;34mminishell\033[0m> "
 # define WHITESPACES " \t\v\n\r"
-# define METACHARS "><;|"
+# define OPERATORS "><|"
 
 typedef enum e_token_type
 {

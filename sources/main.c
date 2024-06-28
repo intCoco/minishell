@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 22:52:21 by chuchard          #+#    #+#             */
-/*   Updated: 2024/06/04 22:08:52 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:20:58 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ void	handle_sig(int sig)
 	{
 		ft_putchar_fd('\n', 1);
 		ft_putstr_fd(PROMPT, 1);
+	}
+	else if (sig == SIGQUIT)
+	{
+		exit(1);
 	}
 }
 
@@ -78,9 +82,7 @@ void	add_token(t_input *input, t_token *new)
 	t_token	*tmp;
 
 	if (!input->tokens)
-	{
 		input->tokens = new;
-	}
 	else
 	{
 		tmp = input->tokens;
@@ -104,6 +106,31 @@ void	free_tokens(t_token *tokens)
 	}
 }
 
+char	*remove_char(char *str, char *to_remove)
+{
+	char	*result;
+	char	*dst;
+
+	result = (char *)malloc(ft_strlen(str) + 1);
+	if (result == NULL)
+	{
+		fprintf(stderr, "malloc error\n");
+		exit(1);
+	}
+	dst = result;
+	while (*str != '\0')
+	{
+		if (!ft_ischarset(*str, to_remove))
+		{
+			*dst = *str;
+			dst++;
+		}
+		str++;
+	}
+	*dst = '\0';
+	return (result);
+}
+
 void	ft_free_input_data(t_input *input)
 {
 	free_tokens(input->tokens);
@@ -112,23 +139,21 @@ void	ft_free_input_data(t_input *input)
 	input->tokens = NULL;
 }
 
-bool	ft_handle_quotes(t_input *input)
+bool	ft_handle_quotes(t_input *input, char type)
 {
 	printf("' detected\n");
 	input->i++;
-	while (input->left[input->i] && input->left[input->i] != '\''
-		&& input->left[input->i] != '\"')
+	while (input->left[input->i] && input->left[input->i] != type)
 		input->i++;
 	if (!input->left[input->i])
 	{
 		ft_putendl_fd("Unclosed quotes.", 2);
 		return (true);
 	}
-	input->i++;
 	return (false);
 }
 
-bool	ft_handle_metachars(t_input *input, t_token_type *type)
+bool	ft_handle_operators(t_input *input, t_token_type *type)
 {
 	*type = TEXT;
 	if (input->left[input->i] == '|')
@@ -154,32 +179,34 @@ bool	ft_handle_metachars(t_input *input, t_token_type *type)
 
 void	ft_create_token(t_input *input, t_token_type type)
 {
-	add_token(input, new_token(ft_strndup(input->left, 0, input->i), type));
+	char *token_input;
+
+	token_input = ft_strndup(input->left, 0, input->i);
+	add_token(input, new_token(remove_char(token_input, "\'\""), type));
 	if (input->left[input->i] == ' ')
 		input->i++;
 	input->left += input->i;
 	input->i = 0;
 }
 
-void	ft_tokenization(t_input *input)
+void	ft_tokenization(t_input *input) // GERER LES BACKSLASH
 {
-	t_token_type	type;
+	t_token_type type;
 
 	while (input->left[input->i])
 	{
-		while (input->left[input->i] && (input->i == 0
-				|| (input->i > 0 && input->left[input->i - 1] == '\\')
-				|| !ft_ischarset(input->left[input->i], METACHARS))
+		type = TEXT;
+		while (input->left[input->i] && (input->i == 0 || (input->i > 0
+					&& input->left[input->i - 1] == '\\')
+				|| !ft_ischarset(input->left[input->i], OPERATORS))
 			&& !ft_ischarset(input->left[input->i], WHITESPACES))
 		{
-			if ((input->left[input->i] == 39 || input->left[input->i] == 34))
+			if ((input->left[input->i] == 39 || input->left[input->i] == 34)
+				&& ft_handle_quotes(input, input->left[input->i]))
+				return ;
+			else if (ft_ischarset(input->left[input->i], OPERATORS))
 			{
-				if (ft_handle_quotes(input))
-					return ;
-			}
-			else if (ft_ischarset(input->left[input->i], METACHARS))
-			{
-				if (ft_handle_metachars(input, &type))
+				if (ft_handle_operators(input, &type))
 					return ;
 				break ;
 			}
@@ -187,7 +214,7 @@ void	ft_tokenization(t_input *input)
 				input->i++;
 		}
 		ft_create_token(input, type);
-		print_info(input);														// à dégager
+		print_info(input); // à dégager
 	}
 }
 
