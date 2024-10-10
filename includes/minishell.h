@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:52:12 by chuchard          #+#    #+#             */
-/*   Updated: 2024/10/10 08:27:53 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:37:28 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,5 +189,6 @@ t_token	*new_token(char *value, t_token_type type);
 int		find_env_len(char *to_find, char **env, int len);
 void	ft_exit(t_input *input, t_exec *ex);
 char	**custom_realloc(char **env, int old_size, int new_size);
+void	renable_dollar(char *str);
 
 #endif

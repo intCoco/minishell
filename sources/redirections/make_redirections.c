@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_redirections.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nileempo <nileempo@42.fr>                  +#+  +:+       +#+        */
+/*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 17:17:53 by nileempo          #+#    #+#             */
-/*   Updated: 2024/10/10 00:27:15 by nileempo         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:49:38 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	make_open_output(t_token *current, int *last_output)
 	if (*last_output == -1)
 	{
 		perror("Minishell");
-		return (1);
+		exit(1);
 	}
 	return (0);
 }

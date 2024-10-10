@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 05:16:31 by chuchard          #+#    #+#             */
-/*   Updated: 2024/10/10 05:26:46 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:38:07 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,17 @@ char	**custom_realloc(char **env, int old_size, int new_size)
 	new_env[old_size] = NULL;
 	free(env);
 	return (new_env);
+}
+
+void	renable_dollar(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == 26)
+			str[i] = '$';
+		i++;
+	}
 }

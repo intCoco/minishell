@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:35:45 by chuchard          #+#    #+#             */
-/*   Updated: 2024/10/10 16:02:27 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:32:19 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ void	remove_quotes(char *str)
 	len = ft_strlen(str);
 	while (str[i])
 	{
-		if (str[i] == 26)
-			str[i] = '$';
 		if (ft_ischarset(str[i], "\'\""))
 		{
 			type = str[i];

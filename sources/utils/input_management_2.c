@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 17:38:35 by chuchard          #+#    #+#             */
-/*   Updated: 2024/10/10 16:17:02 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:36:57 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static void	ft_create_token(t_input *input, t_token_type type, t_exec *ex)
 	ft_bzero(tk_input, 70000);
 	define_input(input, ex, tk_input);
 	remove_quotes(tk_input);
+	renable_dollar(tk_input);
 	add_token(input, new_token(ft_strdup(tk_input), type));
 	if (input->left[input->i] == ' ')
 		input->i++;
