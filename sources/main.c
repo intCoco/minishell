@@ -6,7 +6,7 @@
 /*   By: chuchard <chuchard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 22:52:21 by chuchard          #+#    #+#             */
-/*   Updated: 2024/10/10 15:22:46 by chuchard         ###   ########.fr       */
+/*   Updated: 2024/10/10 18:07:41 by chuchard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	handle_sig(int sig)
 	}
 	else if (sig == SIGQUIT)
 	{
-		write(1, "Quit (core dumped)\n", 20);
+		write(2, "Quit (core dumped)\n", 20);
 		rl_replace_line("", 0);
 	}
 }
